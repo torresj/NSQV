@@ -39,9 +39,10 @@ class _MovieListState extends State<MovieList> {
                 return RefreshIndicator(
                   onRefresh: _refreshMovies,
                   child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     itemCount: _movies.length,
                     itemBuilder: (context, index) =>
-                        MovieCard(event: _movies[index]),
+                        MovieCard(movie: _movies[index]),
                   ),
                 );
               }

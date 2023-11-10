@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nsqv/widgets/home/home_screen.dart';
+import 'package:flutter/services.dart';
 
 var kColorSchema = ColorScheme.fromSeed(seedColor: Colors.indigo);
 
 void main() {
-  runApp(const NsqvApp());
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Than we setup preferred orientations,
+  // and only after it finished we run our app
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((value) => runApp(const NsqvApp()));
 }
 
 class NsqvApp extends StatelessWidget {
@@ -14,7 +20,7 @@ class NsqvApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         title: 'Qué veo',
         theme: ThemeData(
           // This is the theme of your application.
@@ -36,10 +42,10 @@ class NsqvApp extends StatelessWidget {
           useMaterial3: true,
           bottomNavigationBarTheme:
               const BottomNavigationBarThemeData().copyWith(
-                backgroundColor: kColorSchema.primary,
-                selectedItemColor: kColorSchema.onPrimary,
-                unselectedItemColor: kColorSchema.inversePrimary,
-              ),
+            backgroundColor: kColorSchema.primary,
+            selectedItemColor: kColorSchema.onPrimary,
+            unselectedItemColor: kColorSchema.inversePrimary,
+          ),
         ),
         home: const HomeScreen());
   }
