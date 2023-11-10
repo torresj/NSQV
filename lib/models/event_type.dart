@@ -1,0 +1,1 @@
+enum EventType { movie, serie }
