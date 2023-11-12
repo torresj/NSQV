@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nsqv/widgets/home/home_screen.dart';
-import 'package:flutter/services.dart';
 
 var kColorSchema = ColorScheme.fromSeed(seedColor: Colors.indigo);
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Than we setup preferred orientations,
-  // and only after it finished we run our app
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((value) => runApp(const NsqvApp()));
+  runApp(const NsqvApp());
 }
 
 class NsqvApp extends StatelessWidget {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nsqv/widgets/movies/movie_list.dart';
+import 'package:nsqv/models/event_type.dart';
+import 'package:nsqv/widgets/events/event_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,8 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final List<Widget> _screens = const [
-    Text("Series"),
-    MovieList(),
+    EventList(
+      eventType: EventType.serie,
+    ),
+    EventList(
+      eventType: EventType.movie,
+    ),
     Text("Canales de TV"),
   ];
 
