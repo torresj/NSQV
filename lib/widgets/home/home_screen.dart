@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nsqv/models/event_type.dart';
 import 'package:nsqv/widgets/events/event_list.dart';
+import 'package:nsqv/widgets/sports/sports_list.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
           eventType: EventType.movie,
           filter: filter,
         ),
-        Text("Deportes"),
+        SportsList(
+          filter: filter,
+        ),
       ][index];
 
   @override
@@ -70,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                 child: SearchAnchor(
                   builder: (context, controller) => SearchBar(
                     hintText: "Búsqueda por canal",

@@ -2,25 +2,21 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nsqv/models/event_type.dart';
-import 'package:nsqv/services/movies_service.dart';
 import 'package:nsqv/models/event.dart';
-import 'package:nsqv/services/series_service.dart';
-import 'package:nsqv/widgets/events/event_card.dart';
+import 'package:nsqv/services/sports_service.dart';
+import 'package:nsqv/widgets/sports/sport_card.dart';
 
-class EventList extends StatefulWidget {
-  const EventList({super.key, required this.eventType, required this.filter});
+class SportsList extends StatefulWidget {
+  const SportsList({super.key, required this.filter});
 
-  final EventType eventType;
   final String filter;
 
   @override
-  State<EventList> createState() => _EventListState();
+  State<SportsList> createState() => _SportsListState();
 }
 
-class _EventListState extends State<EventList> {
-  final MovieService _movieService = MovieService.getInstance();
-  final SeriesService _seriesService = SeriesService.getInstance();
+class _SportsListState extends State<SportsList> {
+  final SportsService _sportsService = SportsService.getInstance();
 
   List<Event> _events = [];
 
@@ -49,11 +45,11 @@ class _EventListState extends State<EventList> {
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200.0,
-                      mainAxisExtent: 375.0,
+                      mainAxisExtent: 200.0,
                       crossAxisSpacing: 5.0,
                       mainAxisSpacing: 5.0,
                     ),
-                    itemBuilder: (context, index) => MovieCard(
+                    itemBuilder: (context, index) => SportCard(
                       event: _events[index],
                     ),
                   ),
@@ -64,9 +60,7 @@ class _EventListState extends State<EventList> {
   }
 
   Future _refreshEvents() async {
-    final events = widget.eventType == EventType.movie
-        ? await _movieService.getLiveEvents()
-        : await _seriesService.getLiveEvents();
+    final events = await _sportsService.getLiveEvents();
     setState(() {
       _events = events
           .where((event) => event.channel.name.contains(widget.filter))
@@ -75,9 +69,7 @@ class _EventListState extends State<EventList> {
   }
 
   Future _initEvents() async {
-    final events = widget.eventType == EventType.movie
-        ? await _movieService.getLiveEvents()
-        : await _seriesService.getLiveEvents();
+    final events = await _sportsService.getLiveEvents();
     _events = events
         .where((event) => event.channel.name
             .toLowerCase()
