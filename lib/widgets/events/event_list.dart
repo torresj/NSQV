@@ -9,9 +9,10 @@ import 'package:nsqv/services/series_service.dart';
 import 'package:nsqv/widgets/events/event_card.dart';
 
 class EventList extends StatefulWidget {
-  const EventList({super.key, required this.eventType});
+  const EventList({super.key, required this.eventType, required this.filter});
 
   final EventType eventType;
+  final String filter;
 
   @override
   State<EventList> createState() => _EventListState();
@@ -67,7 +68,9 @@ class _EventListState extends State<EventList> {
         ? await _movieService.getLiveEvents()
         : await _seriesService.getLiveEvents();
     setState(() {
-      _events = events;
+      _events = events
+          .where((event) => event.channel.name.contains(widget.filter))
+          .toList();
     });
   }
 
@@ -75,6 +78,10 @@ class _EventListState extends State<EventList> {
     final events = widget.eventType == EventType.movie
         ? await _movieService.getLiveEvents()
         : await _seriesService.getLiveEvents();
-    _events = events;
+    _events = events
+        .where((event) => event.channel.name
+            .toLowerCase()
+            .contains(widget.filter.toLowerCase()))
+        .toList();
   }
 }

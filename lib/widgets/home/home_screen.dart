@@ -20,22 +20,37 @@ class _HomeScreenState extends State<HomeScreen> {
       label: 'Películas',
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.format_list_numbered),
-      label: 'Canales',
+      icon: Icon(Icons.sports_soccer_outlined),
+      label: 'Deportes',
     ),
-  ];
-
-  final List<Widget> _screens = const [
-    EventList(
-      eventType: EventType.serie,
-    ),
-    EventList(
-      eventType: EventType.movie,
-    ),
-    Text("Canales de TV"),
   ];
 
   int _selectedIndex = 1;
+  String filter = '';
+
+  void _onSearchChange(String text) {
+    setState(() {
+      filter = text;
+    });
+  }
+
+  void _clearFilter() {
+    setState(() {
+      filter = '';
+    });
+  }
+
+  Widget _getScreen(int index) => <Widget>[
+        EventList(
+          eventType: EventType.serie,
+          filter: filter,
+        ),
+        EventList(
+          eventType: EventType.movie,
+          filter: filter,
+        ),
+        Text("Deportes"),
+      ][index];
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +67,37 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 20.0, left: 10.0, right: 10.0),
-          child: _screens[_selectedIndex],
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 15,right: 15,bottom: 15),
+                child: SearchAnchor(
+                  builder: (context, controller) => SearchBar(
+                    hintText: "Búsqueda por canal",
+                    controller: controller,
+                    padding: const MaterialStatePropertyAll<EdgeInsets>(
+                      EdgeInsets.symmetric(horizontal: 16.0),
+                    ),
+                    onChanged: (_) => _onSearchChange(controller.value.text),
+                    leading: const Icon(Icons.search),
+                    trailing: <Widget>[
+                      if (filter.isNotEmpty)
+                        IconButton(
+                            onPressed: () {
+                              controller.clear();
+                              _clearFilter();
+                            },
+                            icon: const Icon(Icons.close))
+                    ],
+                  ),
+                  suggestionsBuilder: (context, controller) => [],
+                ),
+              ),
+              Expanded(
+                child: _getScreen(_selectedIndex),
+              ),
+            ],
+          ),
         ),
       ),
     );
