@@ -76,7 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                 child: SearchAnchor(
                   builder: (context, controller) => SearchBar(
-                    hintText: "Búsqueda por canal",
+                    hintText: _selectedIndex == 2
+                        ? "Buscar por canal y contenido"
+                        : "Buscar por canal",
                     controller: controller,
                     padding: const MaterialStatePropertyAll<EdgeInsets>(
                       EdgeInsets.symmetric(horizontal: 16.0),

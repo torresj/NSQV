@@ -55,6 +55,8 @@ class EventView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(
               top: 20,
+              left: 30,
+              right: 30,
             ),
             child: Text(
               event.name,
@@ -76,13 +78,16 @@ class EventView extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onPrimary),
             ),
           ),
-          Text(
-            event.classification,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: Theme.of(context).colorScheme.onPrimary),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              event.classification,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                  color: Theme.of(context).colorScheme.onPrimary),
+            ),
           ),
           const SizedBox(
             height: 30,

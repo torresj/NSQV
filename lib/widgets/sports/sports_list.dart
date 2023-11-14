@@ -45,7 +45,7 @@ class _SportsListState extends State<SportsList> {
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200.0,
-                      mainAxisExtent: 200.0,
+                      mainAxisExtent: 220.0,
                       crossAxisSpacing: 5.0,
                       mainAxisSpacing: 5.0,
                     ),
@@ -71,9 +71,13 @@ class _SportsListState extends State<SportsList> {
   Future _initEvents() async {
     final events = await _sportsService.getLiveEvents();
     _events = events
-        .where((event) => event.channel.name
-            .toLowerCase()
-            .contains(widget.filter.toLowerCase()))
+        .where(
+          (event) =>
+              event.channel.name
+                  .toLowerCase()
+                  .contains(widget.filter.toLowerCase()) ||
+              event.name.toLowerCase().contains(widget.filter.toLowerCase()),
+        )
         .toList();
   }
 }
